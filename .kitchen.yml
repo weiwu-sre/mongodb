@@ -147,6 +147,36 @@ suites:
     # purely to test mongo ruby driver code
     - centos-7.3
 
+- name: user_management_issue_180
+  run_list:
+  - recipe[sc-mongodb::default]
+  - recipe[sc-mongodb::user_management]
+  attributes:
+    mongodb:
+      cluster_name: mongodb
+      admin:
+        username: admin
+        password: admin
+      authentication:
+        username: admin
+        password: admin
+      users:
+        - username: mongodb
+          password: mongodb
+          roles: [ "dbOwner", "root"]
+          database: mongodb
+      config:
+        auth: true
+        mongod:
+          net:
+            bindIp: "0.0.0.0"
+            bindIpAll: true
+            port: 27017
+  includes:
+    # Only need to test this on one OS since this is
+    # purely to test mongo ruby driver code
+    - centos-7.3
+
 - name: replicaset1
   driver:
     network:
