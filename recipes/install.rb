@@ -97,6 +97,12 @@ service 'mongod' do
   only_if { config_type == 'mongod' }
 end
 
+service 'mongod' do
+  supports start: true, stop: true, restart: true, status: true
+  action [:disable, :stop]
+  only_if { config_type == 'mongos' }
+end
+
 # Adjust the version number for RHEL style if needed
 package_version = case node['platform_family']
                   when 'rhel'
