@@ -94,6 +94,7 @@ end
 service 'mongod' do
   supports start: true, stop: true, restart: true, status: true
   action :enable
+  only_if { config_type == 'mongod' }
 end
 
 # Adjust the version number for RHEL style if needed
